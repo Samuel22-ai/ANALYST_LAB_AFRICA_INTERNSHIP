@@ -1,0 +1,25 @@
+# Python Virtual Environments
+env/
+venv/
+.venv/
+
+# Datasets (Never push data to GitHub)
+data/raw/*.csv
+data/processed/*.csv
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Future Machine Learning Models (Weeks 7 & 8)
+*.pkl
+*.joblib
+*.h5
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
