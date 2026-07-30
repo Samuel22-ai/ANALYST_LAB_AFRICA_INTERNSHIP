@@ -1,3 +1,4 @@
+
 # **AnalystLab Africa \- Machine Learning Engineering Portfolio**
 
 ## **📌 Overview**
@@ -18,24 +19,31 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 
 ## **🚀 Internship Roadmap & Weekly Logs**
 
-### **✅ Weeks 1 & 2: Data Preprocessing & EDA**
+### ✅ Weeks 1 & 2: Data Preprocessing & EDA
 
 **Status:** Completed
-
 **Datasets:** Titanic (Binary Classification) & Iris (Multi-Class Classification)
-
 **Engineering Highlights:**
 
-* **Missing Data Imputation:** Handled multivariate missingness using Median (numerical resistance to skew) and Mode (categorical) imputation. Dropped Titanic's Cabin column due to 77% data sparsity.  
-* **Outlier Boundary Mathematics:** Capped severe distribution skew in Titanic's Fare feature using the IQR (Interquartile Range) boundary method, while intentionally retaining biological variance outliers in Iris's SepalWidthCm.  
-* **Categorical Encoding:** Translated string labels to numerical states via LabelEncoder (Iris target) and solved the Dummy Variable Trap using One-Hot Encoding with drop\_first=True (Titanic Embarked).  
-* **Feature Optimization:** Identified severe multicollinearity using Pearson Correlation Heatmaps. Flagged ![][image1] between Pclass and Fare, and ![][image2] between PetalLength and PetalWidth, taking steps to reduce model footprint by eliminating redundant variables.
+* **Missing Data Imputation:** Handled multivariate missingness using Median (numerical resistance to skew) and Mode (categorical) imputation. Dropped Titanic's `Cabin` column due to 77% data sparsity.
 
-### **⏳ Week 3: Machine Learning Fundamentals**
+* **Outlier Boundary Mathematics:** Capped severe distribution skew in Titanic's `Fare` feature using the IQR (Interquartile Range) boundary method, while intentionally retaining biological variance outliers in Iris's `SepalWidthCm`.
 
-**Status:** Next up
+* **Categorical Encoding:** Translated string labels to numerical states via `LabelEncoder` (Iris target) and solved the Dummy Variable Trap using One-Hot Encoding with `drop_first=True` (Titanic `Embarked`).
 
-**Focus:** Train/Test Splitting, Bias-Variance Tradeoff, and fundamental Model Evaluation metrics (Accuracy, Precision, Recall, Confusion Matrices).
+* **Feature Optimization:** Identified severe multicollinearity using Pearson Correlation Heatmaps. Flagged $r = -0.72$ between `Pclass` and `Fare`, and $r = 0.96$ between `PetalLength` and `PetalWidth`, taking steps to reduce model footprint by eliminating redundant variables.
+
+### ✅ Week 3: Machine Learning Fundamentals & Validation Logic
+
+**Status:** Completed
+**Focus:** Establishing strict evaluation protocols, fixing data leakage vulnerabilities, and proving the "Accuracy Paradox."
+**Engineering Highlights:**
+
+* **Data Leakage Resolution:** Refactored the preprocessing pipeline to execute a Stratified 80/20 `train_test_split` *before* scaling and imputation. Ensuring `StandardScaler` and `LabelEncoder` are fit strictly on training data prevents mathematical leakage from the test set.
+
+* **Advanced Imputation:** Upgraded from static Median imputation to `KNNImputer` (K=5) on the Titanic dataset, eliminating artificial variance spikes by algorithmically predicting missing ages based on neighboring features.
+
+* **The Accuracy Paradox:** Deployed intentional "Dummy" and "Flawed" predictors to prove that raw Accuracy is a deceptive metric on imbalanced datasets. Generated Confusion Matrices and Classification Reports to establish Precision and Recall as the true indicators of model health.
 
 ### **🔜 Week 4: Supervised Learning (Linear & Logistic Regression)**
 
