@@ -47,7 +47,27 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 
 ### **🔜 Week 4: Supervised Learning (Linear & Logistic Regression)**
 
-**Focus:** Building baseline predictive models. Predicting numerical values (House Prices via RMSE) and categorical classes (Titanic Survival via Accuracy).
+**Status:** Completed
+
+**Objective:** Transition from data engineering to algorithmic prediction by building, training, and evaluating fundamental continuous and categorical models.
+
+### 🏗️ Task 1: Continuous Financial Forecasting (Linear Regression)
+* **Dataset:** Ames Housing Dataset
+* **Target Variable:** `SalePrice` (Continuous)
+* **Engineering Highlights:**
+  * Applied **IQR Capping** to `GrLivArea` and `LotArea` to prevent spatial outliers from skewing the gradient.
+  * Resolved **Heteroscedasticity** by applying a logarithmic transformation (`np.log1p`) to the target variable to stabilize variance.
+  * Engineered a mathematically pure feature matrix using `StandardScaler` and `OneHotEncoder`.
+* **Evaluation:** Achieved a baseline **RMSE of $31,199.14**, proving high accuracy in mid-market predictions while exposing linear limitations in non-linear luxury markets.
+
+### 🚢 Task 2: Behavioral Classification (Logistic Regression)
+* **Dataset:** Titanic Survival Dataset
+* **Target Variable:** `Survived` (Binary Classification)
+* **Engineering Highlights:**
+  * Designed a strict **Zero-Leakage Pipeline**, applying `KNNImputer` for missing `Age` values *only* after the Train/Test split.
+  * Capped extreme ticket prices (`Fare`) using IQR methods to protect gradient calculations.
+  * Encoded categorical behavioral data (`Sex`, `Embarked`) to establish strict numerical weights.
+* **Evaluation:** Achieved an **Accuracy of 81.01%**. Analyzed the Confusion Matrix to identify algorithmic pessimism (higher False Negatives), justifying the upcoming pivot to non-linear tree-based models.
 
 ### **🔜 Week 5: Advanced Machine Learning & Ensembles**
 
