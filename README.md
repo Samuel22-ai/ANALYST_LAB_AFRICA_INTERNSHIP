@@ -69,10 +69,46 @@ Designed following the industry-standard Cookiecutter Data Science framework:
   * Encoded categorical behavioral data (`Sex`, `Embarked`) to establish strict numerical weights.
 * **Evaluation:** Achieved an **Accuracy of 81.01%**. Analyzed the Confusion Matrix to identify algorithmic pessimism (higher False Negatives), justifying the upcoming pivot to non-linear tree-based models.
 
-### **🔜 Week 5: Advanced Machine Learning & Ensembles**
+### ✅ Week 5: Advanced Machine Learning & Ensembles
 
+**Status:** Completed
 **Focus:** Advancing from baseline models to Decision Trees, Random Forests, and Gradient Boosting (XGBoost).
 
+### 🏗️ Phase 1: Zero-Leakage Preprocessing (Tree-Optimized)
+* **Engineering Highlights:**
+  * Initialized the environment and loaded the datasets.
+  * Executed Zero-Leakage Data Cleaning by dropping `PassengerId`, `Name`, `Ticket`, and `Cabin`.
+  * Capped `Fare` IQR, mapped `Sex`, and One-Hot Encoded `Embarked`.
+  * Applied production transformations including Mode Imputation for `Embarked` and Post-Split KNN Imputation for `Age`.
+  * Bypassed feature scaling since tree-based algorithms do not require it.
+
+### 🌲 Phase 2: The Non-Linear Foundation (Decision Trees)
+* **Engineering Highlights:** Instantiated and trained an unconstrained Decision Tree Classifier. The model grew to a Depth of 25 with 153 Leaves to perfectly separate the training data.
+* **Evaluation:** Train Accuracy (98.31%) vs. Test Accuracy (81.56%).
+* **Analysis:** The performance drop of 16.75% provided absolute proof of High Variance (Overfitting). The model memorized the training noise instead of the real survival boundaries.
+
+### 🌳 Phase 3: Ensemble Learning (Bagging / Random Forest)
+* **Engineering Highlights:** Instantiated and trained a Random Forest Classifier consisting of 100 estimators.
+* **Evaluation:** Train Accuracy (98.31%) vs. Test Accuracy (81.01%).
+* **Analysis:** The performance drop of 17.31% exposed the "Overfitting Committee". Because the 100 trees were unconstrained, they all overfitted individually, which amplified the variance rather than curing it.
+
+### 🚀 Phase 4: Ensemble Learning (Boosting / Gradient Boosting)
+* **Engineering Highlights:** Instantiated and trained a sequential Gradient Boosting Classifier with a default constraint of `max_depth=3`.
+* **Evaluation:** Train Accuracy (90.45%) vs. Test Accuracy (81.01%).
+* **Analysis:** The performance drop was successfully slashed to 9.44%, curing the variance. However, the model became too cautious (yielding only 45 True Positives) and struggled to find edge-case survivors.
+
+### 🎛️ Phase 5: Hyperparameter Tuning (The Ultimate Masterpiece)
+* **Engineering Highlights:**
+  * Configured `GridSearchCV` to mathematically search for optimal Random Forest constraints, finding: `max_depth = 3`, `min_samples_split = 10`, `n_estimators = 100`.
+  * Executed Grid Search on Gradient Boosting, finding optimal parameters: `learning_rate = 0.1`, `max_depth = 4`, `n_estimators = 100`.
+* **Evaluation:**
+  * **Tuned Random Forest:** Train (84.27%) vs. Test (79.33%). Variance was perfectly stabilized (4.94% drop), but the model became too simple (High Bias).
+  * **Tuned Gradient Boosting:** Train (94.10%) vs. Test (82.12%). 
+* **Analysis:** Achieved the Ultimate Tradeoff with Gradient Boosting. By increasing the complexity to `max_depth=4`, a slight amount of variance was reintroduced (11.98% gap), but it secured the highest Test Accuracy of the week (82.12%).
+
+### 🏆 Phase 6: Model Comparison & Final Deployment Selection
+* **Winning Model:** Tuned Gradient Boosting.
+* **Justification:** It achieved the highest absolute testing accuracy (82.12%) while expertly balancing Precision (0.82) and Recall (0.68). It successfully navigated the Bias-Variance tradeoff through rigorous hyperparameter tuning.
 ### **🔜 Week 6: Model Tuning & Validation**
 
 **Focus:** Hyperparameter tuning via Grid/Random Search, K-Fold Cross-Validation, and balancing the Bias-Variance tradeoff on the Pima Indians Diabetes dataset.
@@ -93,6 +129,3 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 * **Visualizations:** Seaborn, Matplotlib  
 * **Deployment (Upcoming):** Flask, FastAPI, Streamlit
 
-[image1]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAaCAYAAAA38EtuAAADeElEQVR4Xu2YTUhUURTHZ7Cg6NPKhpyPOzMODK4qBoqgwEVFghFIi8JNBBGtQiWiICiibaAElUQSEWFIBFEUuQhqERWBC1u0qgiihS0E20TZ7/juxTt33nPGSFG7f/jz7j1f793zzrv3zMRiHh4eHh4ec4RCobA6k8mcVEr1wXNwk2vjoqGhYSU+/dh2JJPJlPjYzGaza42tlkncPuQXUqlUwY71XyCXy7F+NUzSjpGEZYxbuX5Avs21taGT9wlORLBX7CQO42fpdHoX482MH2l9N+q4E3bRYgkLvgEHZWyEzC+R+CdU3nLLtgzoS9i9U8FXYPMhHJEXKP7YPWB+FJc68aP61/MiXyMblxhO2MUJFppnwV+5nrblyNqrJQLdfhJ23JaVSqWlyK/BPTJXU1U/JtVs7JifVUFVd015R0D2NQxbm5qa0jKXKzdok+Cu7XwFz7ub5/3tJlqSqBPRYcttoGumYpO2TBKP/FRMbwmSeGQ9xHtq50XuJ/Hd+1ZADgICXJeNHYcvsBenqzrAe5hzfeYjTELdBUfJpwP2W+H9fD6/xtU5kO1qEP4ify2usgwY7JO3pzf3MR6oH9YzHoKjsNn1McDvMLafayWx3s7WKS2JDEtoZoaJ1pU7AA+5OhfYbCf2OOwTP1dfBoxP6CTLXvaTB9qJOM61TV6CjF2f2YQ8MM+TUE6LFUa2uI0xfTAx7wpL6EwTje0O+FFNU2ACqXYVFOPtRCKxwtVHAodeONLY2LjB1c0leLlbVOXpH0pse2BW/KISGiWPQBzbK/AN9vWu0sAclNhdnq6bqUCxWFyF0wt4JzaDCs4GvWpFpUVRKrXqJ/aXkC9RBV9kaKJhuy0PgxQZdiPwuZxdrl5gkszaz8SmvqZm1rbXMa2EGMLRrNPiVIP0l9z0YK0k/gEqYJ0b519AugYVfPKTPy4MZE2yNlmjkckLlx7YttPyyXNKOb24Ban4bmJ2ytgI9T2qvkjTa5r9eaFCknARvjLdglQf83vwbkwnjmQWmX9TQYdV1lFldItI4m7Zco048iPof4hvpvyQ/15T7ghwHuPhsLe8kKAPqMesZ4BrK7wJX8r/F8ZG/5cxDIfc9k37TIQlWgXbX9TPdPmhlHd9KiB7bdSetABRx6JLeruSX4OT+2gt0K1diyTV1Xl4eHh4eHh4eHh4zD3+AFIUGzB3Q2OVAAAAAElFTkSuQmCC>
-
-[image2]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAaCAYAAAAQXsqGAAADeUlEQVR4Xu1XSWhUQRD9gwqKGy5xyCy//yw4iAcjg4ggAUMUAxkNxoPbXRRRiKCQkxIkIAiSQ4ISCB7Ei+IpIigoelAwl4BRMAcXAjnpIehBheh7091JT/Nn5hvMcugHj+6uruqlpqp+j+c5ODg4OPwTUqnUKiHECfA2eD2TyRRsnWrI5/PrfN+/oGy7ObZ1FGJBEOyGTh/Yjz2aKbOVliyy2ex6HPwJ2NPQ0LAGl2lC/x3YaevagM42pdsFNsL2NMdYc6upF4/HV8OZQ5h7SBv0t6MdQbvf1FvSwGEv49Bv0G7QMoxPgu/xq8dNXRN0KnSew+4xI1KJl0N2H7zHvpIxkm6CL/ijUKAc+4d7K52lDTqHTsIl7pjydDq9C/LvaA+ZchOwbYXOtG2rHP+VkaPGRfR/MNq0TjKZTEF2DXPZWcsQMI+h2JbL5dIcs4VRO2SNtu58gpfhpUIuW74cL2PKTUCnxKgIsaWjGC0ljjF/BePfGO9VUcgUXWnahELVgVvgVRhNgH1YZEBtwHzP2DbzBePXti8bKjdRz1FgFx2CdphrQd7Le1MOjoNnvVrFHMoHGYbI/x1QnsICQ75MgafCCNkwwO44dL9EJdYaQf3I2+to1LhsXUdhPiPkD33Xm72wrlHl+qPrGMfgIOeV7T5wqlZq87JnlJOOCBWSEMfQttOJ7Ns28wXs3zZXR3nyzJegNw69gIJAfv6/hThqGuNWbYhxI/gZHA7qpaGQ74mxRCKx2Z5bKFRzSDV5CJZB75yK3k9gP9ijHFXis0DITGHqFbWR4Siyel0uFAprofBSVIZtXdD7apNI5Oe9WCyusNfRwOGz0Ju0HaIdBXab8igQMgBmSgjaQa41J0dxES4WGJ/MKMDFBTY8GpVY/zBq1EZ7HQ0jNSpSwJef/l9stYxvINSUhFdZj26AD/T7yFhv5h2FdY9h/NOXJaYMw1G1U09U1qdFBc5wypepk1GimJDp81o7AO+eTRiP8sLgHsoMp7Cgl23RdoKT4E61Fp8+WzB+6xuPSxGlmBOBfFuM8gD23EKDqYlLDOA8z3CuDuWkMfSbtI5yyiPIPjCqtRyyi+ArIV/yTLmPYIueN/RawAns0wueZ5+2Xr2yw3Dj5rZ8ERHj/zOmKxzRXKuuWeDfE6Kjnh0LO3QOUFc/tB0cHBwcHBwcHP4//gLNMyay8RwrCwAAAABJRU5ErkJggg==>
