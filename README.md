@@ -45,7 +45,7 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 
 * **The Accuracy Paradox:** Deployed intentional "Dummy" and "Flawed" predictors to prove that raw Accuracy is a deceptive metric on imbalanced datasets. Generated Confusion Matrices and Classification Reports to establish Precision and Recall as the true indicators of model health.
 
-### **🔜 Week 4: Supervised Learning (Linear & Logistic Regression)**
+### **✅ Week 4: Supervised Learning (Linear & Logistic Regression)**
 
 **Status:** Completed
 
