@@ -109,9 +109,44 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 ### 🏆 Phase 6: Model Comparison & Final Deployment Selection
 * **Winning Model:** Tuned Gradient Boosting.
 * **Justification:** It achieved the highest absolute testing accuracy (82.12%) while expertly balancing Precision (0.82) and Recall (0.68). It successfully navigated the Bias-Variance tradeoff through rigorous hyperparameter tuning.
-### **🔜 Week 6: Model Tuning & Validation**
+### ✅ Week 6: Model Tuning & Validation
 
-**Focus:** Hyperparameter tuning via Grid/Random Search, K-Fold Cross-Validation, and balancing the Bias-Variance tradeoff on the Pima Indians Diabetes dataset.
+**Status:** Completed
+**Focus:** Hyperparameter tuning via GridSearch, Stratified K-Fold Cross-Validation, Advanced OOP Scikit-Learn Pipelines, and balancing the Bias-Variance tradeoff for medical diagnostics.
+**Dataset:** Pima Indians Diabetes Dataset (Binary Classification)
+
+### 🏗️ Phase 1: Advanced Pipeline Architecture & Defensive Programming
+* **Engineering Highlights:**
+  * Engineered custom Stateful Transformers (e.g., `IQRCapperTransformer`) to calculate statistical boundaries strictly on training data, actively preventing data leakage into the testing set.
+  * Implemented **Defensive Programming** by forcing explicit column declarations via conditional checks (`ValueError`) to prevent silent failures in production environments.
+  * Solved the classic "NumPy Array Trap" by configuring Scikit-Learn to retain Pandas DataFrames (`transform_output="pandas"`, `verbose_feature_names_out=False`), ensuring feature names survived the `ColumnTransformer` destruction.
+  * Assembled a Master `Pipeline` seamlessly linking `ZeroToNanTransformer`, Imputation routing, IQR Capping, and the final Estimator.
+
+### 📈 Phase 2: Visual EDA & Non-Linear Feature Engineering
+* **Engineering Highlights:**
+  * Executed Zero-Leakage Pairplots strictly on the training set to visually identify non-linear biological boundaries.
+  * Discovered critical interaction effects and complex clustering between `Glucose`, `BMI`, and `Age`.
+  * Injected `PolynomialFeatures(degree=2)` into the pipeline for these specific markers. This mathematically bent the linear boundary, immediately boosting the baseline Logistic Regression Recall from 57.95% to 59.36%.
+
+### 🩺 Phase 3: Baseline Cross-Validation & Variance Detection
+* **Engineering Highlights:**
+  * Deployed `StratifiedKFold(n_splits=5)` integrated with `cross_validate` to expose the true split variance of the models across different realities.
+  * **Analysis:** The unconstrained baseline Decision Tree exhibited a massive **+/- 17.28% variance in Recall**, proving it was wildly overfitting to training noise across different folds. 
+
+### 🎛️ Phase 4: Hyperparameter Tuning (The Medical Logic)
+* **Engineering Highlights:**
+  * Transitioned to an Ensemble **Random Forest Classifier** to cure the Decision Tree's high variance.
+  * Implemented algorithmic penalties using `class_weight='balanced'` to force the mathematical gradient to heavily punish missed diabetic diagnoses.
+  * Configured `GridSearchCV` to test hundreds of hyperparameter combinations across 5 folds, explicitly overriding the default accuracy metric to optimize strictly for `refit='recall'`.
+
+### 🏆 Phase 5: Final Evaluation & Business Value Translation
+* **Winning Model:** Tuned Random Forest Classifier
+* **Evaluation Metrics:** Test Accuracy (73.38%), **Recall (78%)**, Precision (59%).
+* **Analysis:** Deliberately traded overall accuracy and precision to maximize Recall. Out of 54 actual diabetic patients, the optimized model successfully caught 42 (True Positives), missing only 12. This architectural decision prioritizes human life (minimizing fatal missed diagnoses) over the minor inconvenience of secondary blood tests (False Positives).
+
+### 💼 Phase 6: Professional Development & Portfolio Integration
+* **Milestone:** Published Phase 3 Edge-AI diagnostic pipeline insights via the LinkedIn "Build-in-Public" framework. 
+* **Documentation:** Rendered a highly customized Seaborn Heatmap of the Confusion Matrix to visually communicate the Precision-Recall tradeoff to non-technical stakeholders and global recruiters. 
 
 ### **🔜 Week 7: API Model Deployment**
 
