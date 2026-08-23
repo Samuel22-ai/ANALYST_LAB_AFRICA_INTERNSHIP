@@ -1,0 +1,8 @@
+STREAMING_CHUNK:Ignoring local environments and caches...
+
+env/
+venv/
+pycache/
+*.pyc
+.ipynb_checkpoints/
+.git/
