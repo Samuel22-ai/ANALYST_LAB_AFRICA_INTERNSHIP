@@ -15,7 +15,7 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 * data/processed/: Cleaned, ML-ready numerical matrices (Ignored via .gitignore).  
 * notebooks/: Jupyter Notebooks containing the mathematical and algorithmic pipelines.  
 * reports/: Executive summary PDFs detailing engineering decisions and data insights.  
-* src/: (Upcoming) Source code for deployed model APIs (Flask/FastAPI).
+* src/: Source code for the deployed FastAPI microservice, including `app.py`, custom transformer classes, `requirements.txt`, and the `Dockerfile` for cloud containerization.
 
 ## **🚀 Internship Roadmap & Weekly Logs**
 
@@ -148,9 +148,32 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 * **Milestone:** Published Phase 3 Edge-AI diagnostic pipeline insights via the LinkedIn "Build-in-Public" framework. 
 * **Documentation:** Rendered a highly customized Seaborn Heatmap of the Confusion Matrix to visually communicate the Precision-Recall tradeoff to non-technical stakeholders and global recruiters. 
 
-### **🔜 Week 7: API Model Deployment**
+### ✅ Week 7: API Model Deployment
 
-**Focus:** Serializing trained models (.pkl / .joblib) and exposing them to the real world via Flask or FastAPI endpoints.
+**Status:** Completed
+**Focus:** Serializing trained pipelines (.joblib), handling namespace pickling errors, and exposing the model to the real world via FastAPI, Docker, and Render.
+
+### 🏗️ Phase 1: Model Serialization & The "Blueprint Trap"
+* **Engineering Highlights:**
+  * Extracted the ultimate tuned champion model from `GridSearchCV` (`.best_estimator_`).
+  * Serialized the complete Zero-Leakage Pipeline (including custom `OutlierTreatmentTransformer` and `ConvertZerotoNanTransformer`) into a `.joblib` artifact.
+  * Solved the classic "Pickling Blueprint Trap" by forcefully mapping custom transformer classes to the `__main__` namespace during API initialization.
+
+### 🌐 Phase 2: FastAPI Backend Development
+* **Engineering Highlights:**
+  * Engineered a high-performance REST API using **FastAPI** and an ASGI server (**Uvicorn**).
+  * Defeated the "Environment Amnesia Trap" by brute-forcing Scikit-Learn's `transform_output="pandas"` configuration inside the API to ensure the `ColumnTransformer` correctly parsed the incoming JSON payload.
+  * Configured Pydantic `BaseModel` schemas to act as a strict data bouncer, validating the 8 clinical vitals before passing them to the XGBoost engine.
+
+### 🐳 Phase 3: Cloud Deployment & Containerization (CI/CD)
+* **Engineering Highlights:**
+  * Architected a pristine `Dockerfile` and `requirements.txt` to package the ASGI server and its dependencies into an isolated Linux environment.
+  * Executed a CI/CD pipeline by connecting the GitHub repository to **Render**, deploying the containerized microservice to the cloud.
+  * Successfully served `200 OK` JSON diagnostic responses via the automated Swagger UI `/docs` dashboard on a live, public endpoint.
+
+### 💼 Phase 4: Professional Development & Portfolio Integration
+* **Milestone:** Published Week 7 Deployment insights via the LinkedIn "Build-in-Public" framework.
+* **Documentation:** Captured screen-recorded API inference testing to validate endpoint health and inference latency for non-technical stakeholders.
 
 ### **🔜 Week 8: Capstone Project**
 
@@ -162,5 +185,5 @@ Designed following the industry-standard Cookiecutter Data Science framework:
 * **Data Engineering:** Pandas, NumPy  
 * **Machine Learning:** Scikit-Learn, XGBoost  
 * **Visualizations:** Seaborn, Matplotlib  
-* **Deployment (Upcoming):** Flask, FastAPI, Streamlit
+* **Deployment & Cloud:** FastAPI, Uvicorn, Docker, Render, Streamlit (Upcoming)
 
